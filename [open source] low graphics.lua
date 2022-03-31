@@ -1,8 +1,11 @@
-local decalsyeeted = false -- makes game look shitty but saves for fps
+-- [ idk what the fuck im doing im so bad at this ] --
+
+local decalsyeeted = false -- makes game look shitty but saves more fps if turnt to true
 
 local w = game.Workspace
 local l = game.Lighting
 local t = w.Terrain
+local m = w.Map
 t.WaterWaveSize = 0
 t.WaterWaveSpeed = 0
 t.WaterReflectance = 0
@@ -15,8 +18,10 @@ for i, v in pairs(game:GetDescendants()) do
     if v:IsA("Part") or v:IsA("Union") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
         v.Material = "Plastic"
         v.Reflectance = 0
-    elseif v:IsA("Decal") or v:IsA("Texture") and decalsyeeted then
-        v.Transparency = 1
+    elseif v:IsA("Decal") or v:IsA("Texture") then
+        if decalsyeeted then
+            v.Transparency = 1
+        end
     elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
         v.Lifetime = NumberRange.new(0)
     elseif v:IsA("Explosion") then
@@ -36,24 +41,19 @@ for i, e in pairs(l:GetChildren()) do
         e.Enabled = false
     end
 end
+  
+for i,v in pairs(w:GetDescendants()) do
+    if v.Name == "Leaf" then
+        v:Destroy()
+    end
+end 
 
-spawn(function()    
-    for i,v in pairs(game.workspace:GetDescendants()) do
-        if v.Name == "Leaf" then
-            v:Destroy()
-        end
+for i,v in next, m:GetDescendants() do
+    if v.Name == "Hedge1" then
+        v:Destroy()
     end
-end)
-    
-spawn(function()
-    for i,v in next, workspace.Map:GetDescendants() do
-        if v.Name == "Hedge1" then
-            v:Destroy()
-        end
-    end
-end)
-    
-spawn(function()
+end   
+
     for i,v in next, game:GetDescendants() do
         if v.Name == "Grass" then
             if v.Parent.ClassName ~= "Folder" then
@@ -61,27 +61,15 @@ spawn(function()
             end
         end
     end
-end)
+
     
-spawn(function()
+
     for i,v in next, game:GetDescendants() do
         if v.Name == "Light" then
             v:Destroy()
         end
-    end
-end)
-    
-spawn(function()
-    for i,v in next, game:GetDescendants() do
-        if v.ClassName == "Part" then
-            if v.Material == Enum.Material.Neon then
-                v.Material = Enum.Material.SmoothPlastic             
-            end
-        end
-    end
-end)
+    end    
 
-spawn(function()
     for i,v in next, game:GetDescendants() do
         if v.ClassName == "Part" then
             if v.Material ~= Enum.Material.SmoothPlastic then
@@ -89,9 +77,7 @@ spawn(function()
             end
         end
     end
-end)
 
-spawn(function()
     for i,v in next, game:GetDescendants() do
         if v.ClassName == "UnionOperation" then
             if v.Material == Enum.Material.SmoothPlastic then
@@ -99,20 +85,27 @@ spawn(function()
             end
         end
     end
-end)
 
-spawn(function()
-    for i,v in next, workspace.Map:GetChildren() do
+    for i,v in next, game:GetDescendants() do
+        if v.ClassName == "Union" then
+            if v.Material == Enum.Material.SmoothPlastic then
+                v.Material = Enum.Material.SmoothPlastic             
+            end
+        end
+    end
+
+    for i,v in next, m:GetChildren() do
         if v.Name == "Grass Plant" then
             v:Destroy()
         end
     end
-end)
 
-spawn(function()
-    for i,v in next, game:GetService("Lighting"):GetChildren() do
+    for i,v in next, l:GetChildren() do
         if v.Name == "Bloom" then
             v.Threshold = 10
         end
     end
-end)
+
+for i,v in next, game:GetService("Workspace").Map.Decoration:GetChildren() do
+    v:Destroy()
+end
