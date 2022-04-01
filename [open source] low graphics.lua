@@ -1,7 +1,5 @@
 -- [ idk what the fuck im doing im so bad at this ] --
 
-local decalsyeeted = false -- makes game look shitty but saves more fps if turnt to true
-
 local w = game.Workspace
 local l = game.Lighting
 local t = w.Terrain
